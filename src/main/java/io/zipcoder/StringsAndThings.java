@@ -1,6 +1,8 @@
 package io.zipcoder;
 
 
+import com.sun.tools.javac.code.Attribute;
+
 /**
  * @author tariq
  */
@@ -15,7 +17,15 @@ public class StringsAndThings {
      *           countYZ("day fyyyz"); // Should return 2
      */
     public Integer countYZ(String input){
-        return null;
+        Integer counter = 0;
+        String [] x = input.split(" ");
+        for(String y:x){
+            Character z = y.charAt(y.length()-1);
+            if((z.toString()).equals("y") || (z.toString()).equals("z")){
+                counter++;
+            }
+        }
+        return counter;
     }
 
     /**
@@ -28,7 +38,12 @@ public class StringsAndThings {
      *           removeString("Hello there", "x") // Should return "Hello there"
      */
     public String removeString(String base, String remove){
-        return null;
+        String newWord = "";
+        String newWordArr [] = base.split(remove);
+        for(String words: newWordArr){
+            newWord += words;
+        }
+        return newWord;
     }
 
     /**
@@ -40,7 +55,34 @@ public class StringsAndThings {
      *           containsEqualNumberOfIsAndNot("noisxxnotyynotxisi") // Should return true
      */
     public Boolean containsEqualNumberOfIsAndNot(String input){
-        return null;
+        String isLeftover = input;
+        String notLeftover = input;
+        Integer isCount = 0;
+        Integer notCount = 0;
+
+        for(int i = 0; i <= isLeftover.length(); i++){
+            Integer x = isLeftover.indexOf("is");
+            if (x!=-1){
+                isLeftover = isLeftover.substring(x+2);
+                isCount++;
+            }
+        }
+
+        for(int i = 0; i <= notLeftover.length(); i++){
+            Integer y = notLeftover.indexOf("not");
+            if (y!=-1){
+                notLeftover = notLeftover.substring(y+3);
+                notCount++;
+            }
+        }
+
+        if(isCount == notCount) {
+            return true;
+        }
+        else    {
+            return false;
+        }
+
     }
 
     /**
@@ -50,10 +92,53 @@ public class StringsAndThings {
      *           gHappy("xxgxx") // Should return  false
      *           gHappy("xxggyygxx") // Should return  false
      */
-    public Boolean gIsHappy(String input){
-        return null;
-    }
+    public Boolean gIsHappy(String input) {
+        boolean loopBroken = false;
+        boolean g = false;
+        Integer happyG = 0;
+        Integer numOfG = 0;
+        Integer length = input.length() - 2;
 
+        for (int i = 1; i <= length; i++) {
+            Character x = input.charAt(i);
+            Character left = input.charAt(i - 1);
+            Character right = input.charAt(i + 1);
+
+            String sX = x.toString();
+            String sLeft = left.toString();
+            String sRight = right.toString();
+
+            if(i ==1 && !sX.equals("g") && sLeft.equals("g")){ //tests edge cases of "gxxxggxx"
+                g = false;
+                loopBroken = true;
+                break;
+            }
+
+            if (sX.equals("g")) {
+                numOfG++;
+                if (sLeft.equals("g") || sRight.equals("g")) {
+                    happyG++;
+                }
+            }
+
+            if(i == length && !sX.equals("g") && sRight.equals("g")){ //tests edge cases of "xxxggxxg"
+                g = false;
+                loopBroken = true;
+                break;
+            }
+
+        }
+
+        if (numOfG>0 && loopBroken==false) {
+            if (happyG == numOfG) {
+                g = true;
+            } else {
+                g = false;
+            }
+        }
+
+        return g;
+    }
 
     /**
      * We'll say that a "triple" in a string is a char appearing three times in a row.
@@ -63,6 +148,20 @@ public class StringsAndThings {
      *            countTriple("a") // Should return 0
      */
     public Integer countTriple(String input){
-        return null;
+        Integer length = input.length();
+        Integer count = 0;
+
+        if(input.length()>=3) {
+            for (int i = 0; i <= length - 3; i++) {
+                String x = input.substring(i, i+1);
+                String right1 = input.substring(i + 1, i+2);
+                String right2 = input.substring(i + 2, i+3);
+
+                if (right1.equals(x) && right2.equals(x)) {
+                    count++;
+                }
+            }
+        }
+        return count;
     }
 }
